@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Model artifacts (optional: keep if you want)
+# src/best_model.pkl
+
+# Data (optional: uncomment if data is large/sensitive)
+# data/raw/
+# data/processed/
