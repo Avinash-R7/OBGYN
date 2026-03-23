@@ -8,18 +8,14 @@ import requests
 
 explanation = ""
 
-# =====================================================
-# PAGE CONFIG
-# =====================================================
+
 st.set_page_config(
     page_title="Maternal Health – Risk Assessment",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# =====================================================
-# BACKGROUND IMAGE (SOFT, GUARANTEED)
-# =====================================================
+
 def set_bg(url):
     img = requests.get(url).content
     b64 = base64.b64encode(img).decode()
@@ -37,9 +33,7 @@ def set_bg(url):
 
 set_bg("https://images.unsplash.com/photo-1580281657527-47d2bde5c4c9")
 
-# =====================================================
-# GLOBAL MODERN UI STYLE (APP-LIKE)
-# =====================================================
+
 st.markdown("""
 <style>
 .block-container {
@@ -103,9 +97,7 @@ body {
 </style>
 """, unsafe_allow_html=True)
 
-# =====================================================
-# LOAD BACKEND (UNCHANGED)
-# =====================================================
+
 sys.path.append(os.path.abspath("src"))
 from explainability import explain_prediction
 
@@ -115,9 +107,7 @@ importance_df = pd.DataFrame({
     "Importance": model.feature_importances_
 }).sort_values(by="Importance", ascending=False)
 
-# =====================================================
-# HEADER (LIKE MOBILE APP)
-# =====================================================
+
 st.markdown("""
 <div class="header-card">
     <div class="header-title">Maternal Health</div>
@@ -127,9 +117,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# =====================================================
-# INPUT CARD
-# =====================================================
 
 
 age = st.number_input("Age (years)", 15, 50, 25)
@@ -158,12 +145,9 @@ if st.button("Run Risk Assessment", use_container_width=True):
     probs = model.predict_proba(patient)[0]
     risk = ["LOW", "MID", "HIGH"][probs.argmax()]
 
-    # ✅ explanation is CREATED here
     explanation = explain_prediction(model, patient.iloc[0], importance_df)
 
-    # ============================
-    # RESULT CARD
-    # ============================
+
     st.markdown("""
     <div class="card">
         <strong>Risk Assessment Result</strong>
@@ -178,9 +162,6 @@ if st.button("Run Risk Assessment", use_container_width=True):
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ============================
-# EXPLANATION CARD (WORKING)
-# ============================
 if explanation:
     st.markdown(f"""
     <div class="card">
